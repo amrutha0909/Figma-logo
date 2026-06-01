@@ -23,13 +23,13 @@ pipeline{
             steps{
                 withCredentials([
                     usernamePassword(
-                        credentialsId: 'dockerhub-creds'
-                        usernameVariable: 'DOCKER_USER'
+                        credentialsId: 'dockerhub-creds',
+                        usernameVariable: 'DOCKER_USER',
                         passwordVariable: 'DOCKER_PASS'
                     )
                 ]){
                     bat 'docker login -u %DOCKER_USER% -p %DOCKER_PASS%'
-                    bat 'docker push %IMAGE_NAME%:latest'
+                    bat 'docker push %IMAGE_NAME%:latest .'
                 }
             }
         }
