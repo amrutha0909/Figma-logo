@@ -1,5 +1,8 @@
 pipeline{
     agent any
+    environment{
+        IMAGE_NAME="amvar0909/myapp"
+    }
     stages{
         stage('Checkout'){
             steps{
@@ -11,14 +14,23 @@ pipeline{
                 echo "Building application"
             }
         }
-        stage('Test'){
+        stage('Docker Build'){
             steps{
-                error("Tests failed")
+                bat 'docker build -t %IMAGE_NAME%:latest'
             }
         }
-        stage('Deploy'){
+        stage('Docker Push'){
             steps{
-                echo "Deploying application"
+                withCredentials([
+                    usernamePassword(
+                        credentialsId: 'dockerhub-creds'
+                        usernameVariable: 'DOCKER_USER'
+                        passwordVariable: 'DOCKER_PASS'
+                    )
+                ]){
+                    bat 'docker login -u %DOCKER_USER% -p %DOCKER_PASS%'
+                    bat 'docker push %IMAGE_NAME%:latest'
+                }
             }
         }
     }
