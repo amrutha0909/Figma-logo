@@ -9,7 +9,7 @@ pipeline {
         withCredentials([usernamePassword(credentialsId: 'dockerhub', 
           usernameVariable: 'USER', passwordVariable: 'PASS')]) {
           sh 'docker login -u $USER -p $PASS'
-          sh 'docker push yourhub/myapp:latest'
+          sh 'docker push amvar0909/myapp:latest'
         }
       }
     }
