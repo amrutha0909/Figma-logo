@@ -8,7 +8,7 @@ pipeline {
       steps {
         withCredentials([usernamePassword(credentialsId: 'dockerhub', 
           usernameVariable: 'USER', passwordVariable: 'PASS')]) {
-          bat 'docker login -u $USER -p $PASS'
+          bat 'docker login -u %USER% -p %PASS%'
           bat 'docker push amvar0909/myapp:latest'
         }
       }
