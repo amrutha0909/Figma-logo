@@ -16,7 +16,7 @@ pipeline{
         }
         stage('Docker Build'){
             steps{
-                bat 'docker build -t %IMAGE_NAME%:latest'
+                bat 'docker build -t %IMAGE_NAME%:latest .'
             }
         }
         stage('Docker Push'){
@@ -29,7 +29,7 @@ pipeline{
                     )
                 ]){
                     bat 'docker login -u %DOCKER_USER% -p %DOCKER_PASS%'
-                    bat 'docker push %IMAGE_NAME%:latest .'
+                    bat 'docker push %IMAGE_NAME%:latest'
                 }
             }
         }
